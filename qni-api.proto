@@ -137,7 +137,7 @@ message QniProgramRequest {
 message QniProgramResponse {
   oneof data {
     google.protobuf.Empty PROG_RES_OK_LOAD_STATE = 10;
-    google.protobuf.Empty PROG_RES_OK_SHARE_STATE = 11;
+    string PROG_RES_OK_SHARE_STATE = 11;
     QniProgramCommandArray PROG_RES_OK_GET_STATE = 12;
     QniErrorResponse PROG_RES_ERR = 255;
   }
