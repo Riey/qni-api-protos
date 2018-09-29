@@ -2,150 +2,154 @@ syntax = "proto3";
 
 package qni.api;
 
-import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
+message Empty {}
+
+message Timestamp { uint64 time = 1; }
 
 message StringArray { repeated string data = 1; }
 
-message QniErrorResponse {
+message ErrorResponse {
   uint32 req_type = 1;
   string reason = 2;
 }
 
-message QniInputRequest {
+message InputRequest {
   uint32 tag = 1;
-  google.protobuf.Timestamp expire = 2;
+  Timestamp expire = 2;
 
   oneof data {
-    google.protobuf.Empty INPUT_REQ_TOUCH = 10;
-    google.protobuf.Empty INPUT_REQ_ENTER = 11;
-    google.protobuf.Empty INPUT_REQ_ANYKEY = 12;
-    google.protobuf.Empty INPUT_REQ_BOOLEAN = 13;
-    google.protobuf.Empty INPUT_REQ_STR = 20;
-    uint32 INPUT_REQ_STR_MAX_LEN = 21;
-    StringArray INPUT_REQ_STR_SELECT = 22;
-    google.protobuf.Empty INPUT_REQ_INT = 30;
-    uint32 INPUT_REQ_INT_MAX_LEN = 31;
-    google.protobuf.Empty INPUT_REQ_FLOAT = 40;
-    uint32 INPUT_REQ_FLOAT_MAX_LEN = 41;
-    google.protobuf.Empty INPUT_REQ_DATE = 50;
-    google.protobuf.Empty INPUT_REQ_DATETIME = 51;
-    google.protobuf.Empty INPUT_REQ_TIME = 52;
-    google.protobuf.Empty INPUT_REQ_COLOR = 60;
+    Empty TOUCH = 10;
+    Empty ENTER = 11;
+    Empty ANYKEY = 12;
+    Empty BOOLEAN = 13;
+    Empty STR = 20;
+    uint32 STR_MAX_LEN = 21;
+    StringArray STR_SELECT = 22;
+    Empty INT = 30;
+    uint32 INT_MAX_LEN = 31;
+    Empty FLOAT = 40;
+    uint32 FLOAT_MAX_LEN = 41;
+    Empty DATE = 50;
+    Empty DATETIME = 51;
+    Empty TIME = 52;
+    Empty COLOR = 60;
   }
 }
 
-message QniInputResponse {
+message InputResponse {
   uint32 tag = 1;
 
   oneof data {
-    google.protobuf.Empty INPUT_RES_EMPTY = 10;
-    bool INPUT_RES_BOOLEAN = 20;
-    string INPUT_RES_STR = 21;
-    int32 INPUT_RES_INT = 22;
-    float INPUT_RES_FLOAT = 23;
-    google.protobuf.Timestamp INPUT_RES_DATE = 30;
-    google.protobuf.Timestamp INPUT_RES_DATETIME = 31;
-    google.protobuf.Timestamp INPUT_RES_TIME = 32;
+    Empty EMPTY = 10;
+    bool BOOLEAN = 20;
+    string STR = 21;
+    int32 INT = 22;
+    float FLOAT = 23;
+    Timestamp DATE = 30;
+    Timestamp DATETIME = 31;
+    Timestamp TIME = 32;
+    uint32 COLOR = 40;
   }
 }
 
-message QniConsolePrintButtonData {
-  QniInputResponse value = 1;
+message ConsolePrintButtonData {
+  InputResponse value = 1;
   string text = 2;
 }
 
-message QniConsolePrintData {
+message ConsolePrintData {
   oneof data {
-    string PRINT_PRINT = 10;
-    string PRINT_PRINT_LINE = 11;
-    QniConsolePrintButtonData PRINT_PRINT_BUTTON = 12;
-    google.protobuf.Empty PRINT_NEW_LINE = 20;
-    uint32 PRINT_DELETE_LINE = 30;
-    google.protobuf.Empty PRINT_CLEAR_LINE = 31;
+    string PRINT = 10;
+    string PRINT_LINE = 11;
+    ConsolePrintButtonData PRINT_BUTTON = 12;
+    Empty NEW_LINE = 20;
+    uint32 DELETE_LINE = 30;
+    Empty CLEAR_LINE = 31;
   }
 }
 
-enum QniFontStyle {
-  FONT_STYLE_REGULAR = 0x0;
-  FONT_STYLE_ITALIC = 0x1;
-  FONT_STYLE_BOLD = 0x2;
-  FONT_STYLE_UNDERLINE = 0x4;
+enum FontStyle {
+  REGULAR = 0x0;
+  ITALIC = 0x1;
+  BOLD = 0x2;
+  UNDERLINE = 0x4;
 }
 
-message QniFont {
+message Font {
   string font_family = 1;
   float font_size = 2;
   uint32 font_style = 3;
 }
 
-enum QniTextAlign {
-  TEXT_ALIGN_LEFT = 0;
-  TEXT_ALIGN_RIGHT = 1;
-  TEXT_ALIGN_CENTER = 2;
+enum TextAlign {
+  LEFT = 0;
+  RIGHT = 1;
+  CENTER = 2;
 }
 
-message QniConsoleSettingItem {
+message ConsoleSettingItem {
   oneof data {
-    uint32 SETTING_TEXT_COLOR = 10;
-    uint32 SETTING_BACK_COLOR = 11;
-    uint32 SETTING_HIGHLIGHT_COLOR = 12;
-    QniFont SETTING_FONT = 20;
-    QniTextAlign SETTING_TEXT_ALIGN = 21;
+    uint32 TEXT_COLOR = 10;
+    uint32 BACK_COLOR = 11;
+    uint32 HIGHLIGHT_COLOR = 12;
+    Font FONT = 20;
+    TextAlign TEXT_ALIGN = 21;
   }
 }
 
-message QniConsoleRequest {
+message ConsoleRequest {
   oneof data {
-    string CON_REQ_LOAD_STATE = 10;
-    string CON_REQ_SHARE_STATE = 11;
-    uint64 CON_REQ_GET_STATE = 12;
+    string LOAD_STATE = 10;
+    string SHARE_STATE = 11;
+    string SHARE_STATE_OVERWRITE = 12;
+    string DELETE_STATE = 13;
+    uint64 GET_STATE = 20;
   }
 }
 
-message QniConsoleResponse {
+message ConsoleResponse {
   oneof data {
-    QniInputResponse CON_RES_OK_INPUT = 10;
-    google.protobuf.Empty CON_RES_OK_ACCEPT_INPUT = 11;
-    QniErrorResponse CON_RES_ERR = 255;
+    InputResponse OK_INPUT = 10;
+    Empty OK_ACCEPT_INPUT = 11;
+    ErrorResponse ERR = 255;
   }
 }
 
-message QniConsoleMessage {
+message ConsoleMessage {
   oneof data {
-    QniConsoleRequest CON_MSG_REQ = 10;
-    QniConsoleResponse CON_MSG_RES = 11;
+    ConsoleRequest REQ = 10;
+    ConsoleResponse RES = 11;
   }
 }
 
-message QniProgramCommand {
+message ProgramCommand {
   oneof data {
-    QniConsolePrintData PROG_COM_PRINT = 10;
-    QniConsoleSettingItem PROG_COM_UPDATE_SETTING = 11;
+    ConsolePrintData PRINT = 10;
+    ConsoleSettingItem UPDATE_SETTING = 11;
   }
 }
 
-message QniProgramCommandArray { repeated QniProgramCommand commands = 1; }
+message ProgramCommandArray { repeated ProgramCommand commands = 1; }
 
-message QniProgramRequest {
+message ProgramRequest {
   oneof data {
-    QniInputRequest PROG_REQ_INPUT = 10;
-    uint32 PROG_REQ_ACCEPT_INPUT = 11;
+    InputRequest INPUT = 10;
+    uint32 ACCEPT_INPUT = 11;
   }
 }
 
-message QniProgramResponse {
+message ProgramResponse {
   oneof data {
-    google.protobuf.Empty PROG_RES_OK_LOAD_STATE = 10;
-    string PROG_RES_OK_SHARE_STATE = 11;
-    QniProgramCommandArray PROG_RES_OK_GET_STATE = 12;
-    QniErrorResponse PROG_RES_ERR = 255;
+    Empty OK_LOAD_STATE = 10;
+    string OK_SHARE_STATE = 11;
+    ProgramCommandArray OK_GET_STATE = 12;
+    ErrorResponse ERR = 255;
   }
 }
 
-message QniProgramMessage {
+message ProgramMessage {
   oneof data {
-    QniProgramRequest PROG_MSG_REQ = 10;
-    QniProgramResponse PROG_MSG_RES = 11;
+    ProgramRequest REQ = 10;
+    ProgramResponse RES = 11;
   }
 }
