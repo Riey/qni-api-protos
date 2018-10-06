@@ -4,8 +4,6 @@ package qni.api;
 
 message Empty {}
 
-message Timestamp { uint64 time = 1; }
-
 message StringArray { repeated string data = 1; }
 
 message ErrorResponse {
@@ -14,8 +12,7 @@ message ErrorResponse {
 }
 
 message InputRequest {
-  uint32 tag = 1;
-  Timestamp expire = 2;
+  uint32 expire = 1;
 
   oneof data {
     Empty TOUCH = 10;
@@ -37,17 +34,15 @@ message InputRequest {
 }
 
 message InputResponse {
-  uint32 tag = 1;
-
   oneof data {
     Empty EMPTY = 10;
     bool BOOLEAN = 20;
     string STR = 21;
     int32 INT = 22;
     float FLOAT = 23;
-    Timestamp DATE = 30;
-    Timestamp DATETIME = 31;
-    Timestamp TIME = 32;
+    uint64 DATE = 30;
+    uint64 DATETIME = 31;
+    uint64 TIME = 32;
     uint32 COLOR = 40;
   }
 }
@@ -108,9 +103,11 @@ message ConsoleRequest {
 }
 
 message ConsoleResponse {
+
+  uint32 tag = 1;
+
   oneof data {
     InputResponse OK_INPUT = 10;
-    Empty OK_ACCEPT_INPUT = 11;
     ErrorResponse ERR = 255;
   }
 }
@@ -132,15 +129,15 @@ message ProgramCommand {
 message ProgramCommandArray { repeated ProgramCommand commands = 1; }
 
 message ProgramRequest {
-  oneof data {
-    InputRequest INPUT = 10;
-    uint32 ACCEPT_INPUT = 11;
-  }
+
+  uint32 tag = 1;
+
+  oneof data { InputRequest INPUT = 10; }
 }
 
 message ProgramResponse {
   oneof data {
-    Empty OK_LOAD_STATE = 10;
+    Empty OK_EMPTY = 10;
     string OK_SHARE_STATE = 11;
     ProgramCommandArray OK_GET_STATE = 12;
     ErrorResponse ERR = 255;
@@ -151,5 +148,6 @@ message ProgramMessage {
   oneof data {
     ProgramRequest REQ = 10;
     ProgramResponse RES = 11;
+    uint32 ACCEPT_RES = 12;
   }
 }
