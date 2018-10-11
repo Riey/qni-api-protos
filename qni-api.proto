@@ -7,7 +7,7 @@ message Empty {}
 message StringArray { repeated string data = 1; }
 
 message ErrorResponse {
-  uint32 req_type = 1;
+  string req_type = 1;
   string reason = 2;
 }
 
