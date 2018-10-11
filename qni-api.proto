@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package qni.api;
 
+import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
@@ -43,7 +44,7 @@ message InputResponse {
     float FLOAT = 23;
     google.protobuf.Timestamp DATE = 30;
     google.protobuf.Timestamp DATETIME = 31;
-    google.protobuf.Timestamp TIME = 32;
+    google.protobuf.Duration TIME = 32;
     uint32 COLOR = 40;
   }
 }
