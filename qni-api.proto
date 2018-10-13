@@ -2,7 +2,9 @@ syntax = "proto3";
 
 package qni.api;
 
-message Empty {}
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 message StringArray { repeated string data = 1; }
 
@@ -12,37 +14,37 @@ message ErrorResponse {
 }
 
 message InputRequest {
-  uint32 expire = 1;
+  google.protobuf.Timestamp expire = 1;
 
   oneof data {
-    Empty TOUCH = 10;
-    Empty ENTER = 11;
-    Empty ANYKEY = 12;
-    Empty BOOLEAN = 13;
-    Empty STR = 20;
+    google.protobuf.Empty TOUCH = 10;
+    google.protobuf.Empty ENTER = 11;
+    google.protobuf.Empty ANYKEY = 12;
+    google.protobuf.Empty BOOLEAN = 13;
+    google.protobuf.Empty STR = 20;
     uint32 STR_MAX_LEN = 21;
     StringArray STR_SELECT = 22;
-    Empty INT = 30;
+    google.protobuf.Empty INT = 30;
     uint32 INT_MAX_LEN = 31;
-    Empty FLOAT = 40;
+    google.protobuf.Empty FLOAT = 40;
     uint32 FLOAT_MAX_LEN = 41;
-    Empty DATE = 50;
-    Empty DATETIME = 51;
-    Empty TIME = 52;
-    Empty COLOR = 60;
+    google.protobuf.Empty DATE = 50;
+    google.protobuf.Empty DATETIME = 51;
+    google.protobuf.Empty TIME = 52;
+    google.protobuf.Empty COLOR = 60;
   }
 }
 
 message InputResponse {
   oneof data {
-    Empty EMPTY = 10;
+    google.protobuf.Empty EMPTY = 10;
     bool BOOLEAN = 20;
     string STR = 21;
     int32 INT = 22;
     float FLOAT = 23;
-    uint64 DATE = 30;
-    uint64 DATETIME = 31;
-    uint64 TIME = 32;
+    google.protobuf.Timestamp DATE = 30;
+    google.protobuf.Timestamp DATETIME = 31;
+    google.protobuf.Duration TIME = 32;
     uint32 COLOR = 40;
   }
 }
@@ -57,9 +59,9 @@ message ConsolePrintData {
     string PRINT = 10;
     string PRINT_LINE = 11;
     ConsolePrintButtonData PRINT_BUTTON = 12;
-    Empty NEW_LINE = 20;
+    google.protobuf.Empty NEW_LINE = 20;
     uint32 DELETE_LINE = 30;
-    Empty CLEAR_LINE = 31;
+    google.protobuf.Empty CLEAR_LINE = 31;
   }
 }
 
@@ -137,7 +139,7 @@ message ProgramRequest {
 
 message ProgramResponse {
   oneof data {
-    Empty OK_LOAD_STATE = 10;
+    google.protobuf.Empty OK_LOAD_STATE = 10;
     string OK_SHARE_STATE = 11;
     ProgramCommandArray OK_GET_STATE = 12;
     ErrorResponse ERR = 255;
