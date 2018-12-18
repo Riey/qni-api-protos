@@ -60,6 +60,7 @@ message ConsolePrintData {
     string PRINT_LINE = 11;
     ConsolePrintButtonData PRINT_BUTTON = 12;
     google.protobuf.Empty NEW_LINE = 20;
+    google.protobuf.Empty DRAW_LINE = 21;
     uint32 DELETE_LINE = 30;
     google.protobuf.Empty CLEAR_LINE = 31;
   }
@@ -96,10 +97,6 @@ message ConsoleSettingItem {
 
 message ConsoleRequest {
   oneof data {
-    string LOAD_STATE = 10;
-    string SHARE_STATE = 11;
-    string SHARE_STATE_OVERWRITE = 12;
-    string DELETE_STATE = 13;
     uint64 GET_STATE = 20;
   }
 }
@@ -139,8 +136,6 @@ message ProgramRequest {
 
 message ProgramResponse {
   oneof data {
-    google.protobuf.Empty OK_LOAD_STATE = 10;
-    string OK_SHARE_STATE = 11;
     ProgramCommandArray OK_GET_STATE = 12;
     ErrorResponse ERR = 255;
   }
