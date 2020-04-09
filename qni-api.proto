@@ -6,15 +6,6 @@ import "google/protobuf/empty.proto";
 
 message StringArray { repeated string data = 1; }
 
-message ConsolePrintData {
-  oneof data {
-    string                SET_CLASS = 1;
-    string                PRINT = 10;
-    google.protobuf.Empty NEW_LINE = 20;
-    google.protobuf.Empty WAIT     = 21;
-  }
-}
-
 message ConsoleRequest {
 }
 
@@ -38,8 +29,10 @@ message ConsoleMessage {
 
 message ProgramCommand {
   oneof data {
-    ConsolePrintData PRINT = 10;
-    ConsoleSettingItem UPDATE_SETTING = 11;
+    string                SET_CLASS = 1;
+    string                PRINT = 10;
+    google.protobuf.Empty NEW_LINE = 20;
+    google.protobuf.Empty WAIT     = 21;
   }
 }
 
