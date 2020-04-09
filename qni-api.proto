@@ -36,9 +36,18 @@ message ProgramCommand {
   }
 }
 
+message YesNo {
+  string title = 1;
+  string yes = 2;
+  string no = 3;
+}
+
 message ProgramResponse {
   repeated ProgramCommand commands = 1;
-  InputRequest input = 2;
+  oneof input {
+    StringArray           AUTONUM = 10;
+    YesNo                 YESNO = 11;
+  }
 }
 
 message ProgramRequest {
