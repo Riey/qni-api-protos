@@ -42,12 +42,16 @@ message YesNo {
   string no = 3;
 }
 
-message ProgramResponse {
-  repeated ProgramCommand commands = 1;
-  oneof input {
+message InputRequest {
+  oneof data {
     StringArray           AUTONUM = 10;
     YesNo                 YESNO = 11;
   }
+}
+
+message ProgramResponse {
+  repeated ProgramCommand commands = 1;
+  InputRequest            input = 2;
 }
 
 message ProgramRequest {
