@@ -43,6 +43,8 @@ message YesNo {
 }
 
 message InputRequest {
+  uint32 tag = 1;
+
   oneof data {
     StringArray           AUTONUM = 10;
     YesNo                 YESNO = 11;
