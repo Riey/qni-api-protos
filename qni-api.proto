@@ -53,11 +53,13 @@ message InputRequest {
 
 message ProgramResponse {
   repeated ProgramCommand commands = 1;
-  InputRequest            input = 2;
 }
 
 message ProgramRequest {
-  uint32 accept = 12;
+  oneof data {
+    InputRequest input = 1;
+    uint32 accept = 2;
+  }
 }
 
 message ProgramMessage {
